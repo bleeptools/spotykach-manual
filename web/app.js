@@ -109,7 +109,7 @@ function renderHome() {
     <header class="hero">
       <p class="kicker">Spotykach</p>
       <h1>Interactive manual</h1>
-      <p>Two ways into the deck controls: pick a knob or pad to see it across every mode, or pick a mode to see everything it controls. Everything else — routing, storage, MIDI — lives in the manual sections below.</p>
+      <p>Two ways into the deck controls: <a href="#browse-by-control" class="jump-link" data-jump="browse-by-control">pick a knob or pad</a> to see it across every mode, or <a href="#browse-by-mode" class="jump-link" data-jump="browse-by-mode">pick a mode</a> to see everything it controls. Everything else — routing, storage, MIDI — lives in the manual sections below.</p>
       <input id="search" class="search" type="search" placeholder="Search the manual…" aria-label="Search the manual" />
       <div id="search-results"></div>
     </header>
@@ -128,13 +128,13 @@ function renderHome() {
     </section>
 
     <section class="entry-grid">
-      <div class="entry-col">
+      <div class="entry-col" id="browse-by-control">
         <h2>Browse by control</h2>
         <ul class="entry-list">
           ${CONTROLS.map((c) => `<li>${link(`#/control/${c.id}`, c.label)}</li>`).join("")}
         </ul>
       </div>
-      <div class="entry-col">
+      <div class="entry-col" id="browse-by-mode">
         <h2>Browse by mode</h2>
         <ul class="entry-list">
           ${MODES.map((m) => `<li>${link(`#/mode/${m.id}`, m.label)}<span class="hint">${esc(m.blurb)}</span></li>`).join("")}
@@ -167,6 +167,17 @@ function renderHome() {
       ? `<ul class="search-hits">${hits.map((h) => `<li>${link(h.href, h.label)}</li>`).join("")}</ul>`
       : `<p class="hint">No matches.</p>`;
   });
+
+  // In-page jump links (hero copy -> browse sections further down this same
+  // page). Handled here instead of via a plain #fragment href because the
+  // router treats every hash change as a route and would otherwise render
+  // a "not found" page for e.g. "#browse-by-control".
+  for (const jumpLink of document.querySelectorAll("[data-jump]")) {
+    jumpLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      document.getElementById(jumpLink.dataset.jump)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }
 }
 
 function renderTopic(id) {
