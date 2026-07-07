@@ -39,7 +39,20 @@
 
 * { box-sizing: border-box; }
 
-html { -webkit-text-size-adjust: 100%; }
+html {
+  -webkit-text-size-adjust: 100%;
+  /* Bigger-by-default base size. Uses % (not px) so it scales relative to
+     the browser/OS default — i.e. still follows the reader's own text-size
+     or zoom setting rather than overriding it. Nearly everything else in
+     this stylesheet is sized in rem, so this one change scales the whole
+     type ramp together. */
+  font-size: 112.5%; /* ~18px against a 16px UA default */
+}
+@media (min-width: 640px) {
+  /* Desktop reading distance is typically farther; ease back slightly,
+     still above the original 16px baseline. */
+  html { font-size: 106.25%; /* ~17px */ }
+}
 
 body {
   margin: 0;
@@ -126,7 +139,7 @@ pre code { background: none; padding: 0; }
   background: var(--surface);
   color: var(--ink);
   font-family: inherit;
-  font-size: 16px; /* avoid iOS auto-zoom on focus */
+  font-size: max(16px, 1rem); /* rem so it grows with the base size above; floor of 16px avoids iOS auto-zoom on focus */
 }
 
 .search-hits { list-style: none; margin: 0.5rem 0 0; padding: 0; }
