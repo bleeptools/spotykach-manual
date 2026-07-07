@@ -46,12 +46,12 @@ html {
      or zoom setting rather than overriding it. Nearly everything else in
      this stylesheet is sized in rem, so this one change scales the whole
      type ramp together. */
-  font-size: 112.5%; /* ~18px against a 16px UA default */
+  font-size: 150%; /* ~24px against a 16px UA default */
 }
 @media (min-width: 640px) {
   /* Desktop reading distance is typically farther; ease back slightly,
      still above the original 16px baseline. */
-  html { font-size: 106.25%; /* ~17px */ }
+  html { font-size: 140%; /* ~22px */ }
 }
 
 body {
