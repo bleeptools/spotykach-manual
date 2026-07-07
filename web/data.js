@@ -18,6 +18,7 @@
 // scope, and app.js destructures its own top-level `const MODES` etc. from
 // window.SPOTYKACH_DATA — without this wrapper the two `const MODES`
 // declarations collide and throw at load time.
+//
 // ---------------------------------------------------------------------------
 (function () {
 
